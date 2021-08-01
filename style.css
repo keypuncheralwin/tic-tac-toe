@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
+
 body{
     font-family: 'Shadows Into Light', cursive;
     background-color:#6C6A61;
@@ -52,9 +52,9 @@ header{
 } */
 
 .red{
-    /* background-color: red; */
+    background-color: red;
 }
 
 .blue{
-    /* background-color: blue; */
+    background-color: blue;
 }
