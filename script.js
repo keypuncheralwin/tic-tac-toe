@@ -1,55 +1,78 @@
-const boxes = document.querySelectorAll(".box")
+const boxes = document.querySelectorAll(".box"); //getting all boxes from DOM
+let displayMessage = document.getElementById("displayMessage") //getting the messsage display from DOM
+let container = document.getElementById("container");
 
 
-let player = 0; //0 means player 1 and  1 means player 2
+//0 means player 1
+//1 means player 2
+//2 means game over <----- change this
+let player = 0;
+
+const nameX = "X"
+const nameO = "O"
+
 
 let player1 = []; // player 1 position array
 let player2 = []; // player 2 position array
 
-let gameState = 0; //0 means game is ongoing, 1 means game is over
+//0 means game is in play
+//1 means game is over
+//2 means game is paused
+let gameState = 0; 
 
-hover(player) //hover status, starts off red
+
+hover(player) //hover status, starts off as player 1
 
 
 for (let box of boxes) {
+        box.addEventListener("click", event => {
+        if (gameState === 0) { 
+            if (player === 0) {
+                let positionX = parseInt(box.getAttribute('data-pos'))
+                if (checkBox(positionX) !== true) {
+                    displayMessage.textContent = "It is " + nameO + "'s turn"
+                    player1.push(positionX)
+                    console.log(player1)
+                    box.textContent = nameX;
+                    player = 1
+                    if (player1.length >= 3) {
+                        checkWin(nameX, player1);
+                        checkDraw()
+                    }
+                }
+
+
+
+                hover(player)
+
+            } else if (player === 1) {
+                let positionO = parseInt(box.getAttribute('data-pos'))
+                if (checkBox(positionO) !== true) {
+                    displayMessage.textContent = "It is " + nameX + "'s turn"
+                    player2.push(positionO)
+                    console.log(player2)
+                    box.textContent = nameO;
+                    player = 0
+                    if (player1.length >= 3) {
+                        checkWin(nameO, player2);
+                        checkDraw()
+                    }
+
+                }
+                hover(player)
+
+            } 
+
+        }else if (gameState === 1) {
+            alert("game over")
     
-    box.addEventListener("click", event => {
+        }else if (gameState === 2) {
+            alert("game is paused")
+        }
 
-        if (player === 0) {
-            const name = "X"
-            let positionX = parseInt(box.getAttribute('data-pos'))
-            checkBox(positionX)
-            player1.push(positionX)
-            console.log(player1)
-            box.textContent = name;
-            player = 1
-            if (player1.length >= 3) {
-                checkWin(name, player1);
-            }
-            
-            console.log(player)
-            
-            hover(player)
+        })
+   
 
-        } else if (player === 1) {
-            const name = "O"
-            let positionO = parseInt(box.getAttribute('data-pos'))
-            checkBox(positionO)
-            player2.push(positionO)
-            console.log(player2)
-            box.textContent = name;
-            player = 0
-            if (player1.length >= 3) {
-                checkWin(name, player2);
-            }
-            
-            
-            
-            hover(player)
-        }else alert('game over')
-
-    })
-    
 }
 
 const winCombos = [
@@ -66,11 +89,10 @@ const winCombos = [
 function checkWin(name, array) {
     for (win of winCombos) {
         if (win.every((val) => array.includes(val))) {
-
-            alert(name + " is the winner")
-            player = 3
+            gameState = 1;
+            displayMessage.textContent = (name + " is the winner")
             return true
-            
+
         }
 
     }
@@ -80,35 +102,43 @@ function checkWin(name, array) {
 
 function hover(player) {
     for (let box of boxes) {
-        if(player === 0){
+        if (player === 0) {
             box.addEventListener("mouseover", event => {
                 box.classList.remove("blue")
                 box.classList.add("red")
             })
-    
+
             box.addEventListener("mouseleave", event => {
-                
+
                 box.classList.remove("red")
             })
-        }else{
+        } else {
             box.addEventListener("mouseover", event => {
                 box.classList.remove("red")
                 box.classList.add("blue")
             })
-    
+
             box.addEventListener("mouseleave", event => {
                 box.classList.remove("blue")
             })
         }
-        
+
     }
 }
 
 
-function checkBox(position){
-    if(player1.includes(position) || player2.includes(position)){
-        alert("you can't click that box")
-    
+function checkBox(position) {
+    if (player1.includes(position) || player2.includes(position)) {
+        displayMessage.textContent = "That box is already selected"
+        return true
     }
 }
 
+function checkDraw() {
+    let playerPos = player1.length + player2.length
+    if (gameState === 0 && playerPos === 9) {
+        gameState = 1
+        displayMessage.textContent = "It's a Draw"
+
+    }
+}
