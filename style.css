@@ -21,9 +21,11 @@ h1{
 #buttonContainer{
     display: flex;
     justify-content:center;
+    padding-bottom: 10px;
 }
 
-#pause, #reset, #resume{
+.button{
+    
     margin: 2px;
     font: inherit;
     color: inherit;
@@ -34,6 +36,16 @@ h1{
     border: none;
     cursor: pointer;
 }
+
+button:hover{
+    background-color:#FEC84D;
+    color: black;
+}
+
+#status{
+    font-size: 25px;
+}
+
 
 
 #subtitle{

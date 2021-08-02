@@ -1,11 +1,11 @@
 const boxes = document.querySelectorAll(".box"); //getting all boxes from DOM
 let displayMessage = document.getElementById("displayMessage"); //getting the messsage display from DOM
+let status = document.getElementById("status")
 let container = document.getElementById("container");
-const reset = document.getElementById("reset");
-const pause = document.getElementById("pause");
+const reset = document.querySelectorAll("[data-button='reset']")[0]
+const pause = document.querySelectorAll("[data-button='pause']")[0];
 let resume = document.createElement("button");
-resume.setAttribute("id", "resume");
-
+resume.classList.add("button");
 //0 means player 1
 //1 means player 2
 //2 means game over <----- change this
@@ -67,10 +67,10 @@ for (let box of boxes) {
             } 
 
         }else if (gameState === 1) {
-            alert("game over")
+            status.textContent = "The game is over! Why are you still clicking the boxes? Click reset if you want to play again"
     
         }else if (gameState === 2) {
-            alert("game is paused")
+            status.textContent = "The game is paused, remember? click resume to keep playing!"
         }
 
         })
@@ -132,7 +132,7 @@ function hover(player) {
 
 function checkBox(position) {
     if (player1.includes(position) || player2.includes(position)) {
-        displayMessage.textContent = "That box is already selected"
+        displayMessage.textContent = "Why would you click that? Can't you see that box has already been selected?"
         return true
     }
 }
@@ -147,6 +147,7 @@ function checkDraw() {
 }
 
 reset.addEventListener("click", event => {
+    status.remove()
     player1.length = 0;
     player2.length = 0;
     gameState = 0;
@@ -157,6 +158,7 @@ reset.addEventListener("click", event => {
 })
 
 pause.addEventListener("click", event =>{
+    status.textContent = "Why would you pause a tic tac toe game? *sigh* Anyway hit resume to keep playing"
     gameState = 2;
     resume.textContent = "resume"
     reset.before(resume)
@@ -166,6 +168,7 @@ pause.addEventListener("click", event =>{
 
 resume.addEventListener("click", event =>{
     gameState = 0;
+    status.remove()
     resume.before(pause)
     resume.remove()
 })
