@@ -18,6 +18,24 @@ h1{
 
 }
 
+#buttonContainer{
+    display: flex;
+    justify-content:center;
+}
+
+#pause, #reset, #resume{
+    margin: 2px;
+    font: inherit;
+    color: inherit;
+    flex: 1;
+    height: 40px;
+    width: 80px;
+    background-color: #212223;
+    border: none;
+    cursor: pointer;
+}
+
+
 #subtitle{
     margin:0;
     font-size: 20px;

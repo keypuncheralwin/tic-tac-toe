@@ -1,7 +1,10 @@
 const boxes = document.querySelectorAll(".box"); //getting all boxes from DOM
-let displayMessage = document.getElementById("displayMessage") //getting the messsage display from DOM
+let displayMessage = document.getElementById("displayMessage"); //getting the messsage display from DOM
 let container = document.getElementById("container");
-
+const reset = document.getElementById("reset");
+const pause = document.getElementById("pause");
+let resume = document.createElement("button");
+resume.setAttribute("id", "resume");
 
 //0 means player 1
 //1 means player 2
@@ -142,3 +145,27 @@ function checkDraw() {
 
     }
 }
+
+reset.addEventListener("click", event => {
+    player1.length = 0;
+    player2.length = 0;
+    gameState = 0;
+    for(let box of boxes){
+        box.textContent = "";
+
+    }
+})
+
+pause.addEventListener("click", event =>{
+    gameState = 2;
+    resume.textContent = "resume"
+    reset.before(resume)
+    pause.remove()
+
+})
+
+resume.addEventListener("click", event =>{
+    gameState = 0;
+    resume.before(pause)
+    resume.remove()
+})
