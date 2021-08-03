@@ -147,10 +147,13 @@ function checkDraw() {
 }
 
 reset.addEventListener("click", event => {
-    status.remove()
+    status.textContent = "";
     player1.length = 0;
     player2.length = 0;
     gameState = 0;
+    player = 0;
+    hover(player)
+    displayMessage.textContent = "It is " + nameX + "'s turn"
     for(let box of boxes){
         box.textContent = "";
 
@@ -168,7 +171,7 @@ pause.addEventListener("click", event =>{
 
 resume.addEventListener("click", event =>{
     gameState = 0;
-    status.remove()
+    status.textContent = "";
     resume.before(pause)
     resume.remove()
 })

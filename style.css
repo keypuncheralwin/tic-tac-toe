@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sedgwick+Ave+Display&display=swap');
+
+*{box-sizing: border-box;}
 
 body{
     font-family: 'Shadows Into Light', cursive;
     background-color: black;
     color: #FEC84D;
-    box-sizing: border-box;
     text-align: center;
     margin: 0 auto;
     max-width: 800px;
@@ -22,18 +24,18 @@ h1{
     display: flex;
     justify-content:center;
     padding-bottom: 10px;
+    
 }
 
 .button{
-    
+    border: #FEC84D 1px solid;
     margin: 2px;
     font: inherit;
     color: inherit;
     flex: 1;
     height: 40px;
     width: 80px;
-    background-color: #212223;
-    border: none;
+    background-color: black;
     cursor: pointer;
 }
 
@@ -68,30 +70,97 @@ header{
     padding: 30px;
     grid-template-columns: repeat(3, 150px);
     grid-template-rows: repeat(3, 150px);
-    gap: 3px;
     justify-content: center;
     align-content: center;
 
 }
 
 .box{
-    font-family: 'Shadows Into Light', cursive;
-    font-size: 100px;
+    
+    font-family: 'Sedgwick Ave Display', cursive;
+    font-size: 150px;
     cursor: pointer;
-    line-height: 150px;
-    background-color: #212223;
+    line-height: 160px;
     justify-content: center;
     align-content: center;
+    border: #FEC84D 3px solid;
 }
 
-/* .box:hover{
-    background-color: #D6AD60;
-} */
+[data-pos="0"]{
+    border-top: none;
+    border-left: none;
+}
+
+[data-pos="1"]{
+    border-top: none;
+}
+
+[data-pos="2"]{
+    border-top: none;
+    border-right: none;
+}
+
+[data-pos="3"]{
+    border-left: none;
+}
+
+[data-pos="5"]{
+    border-right: none;
+}
+
+[data-pos="6"]{
+    border-left: none;
+    border-bottom: none;
+}
+
+[data-pos="7"]{
+    border-bottom: none;
+}
+
+[data-pos="8"]{
+    border-bottom: none;
+    border-right: none;
+}
+
+
 
 .red{
-    background-color:#F79489;
+    position: relative;
+    height: 150px;
+    width: 150px;
+    
+}
+
+.red::after{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    content: "X";
+    font-family: inherit;
+    font-size: inherit;
+    color: #FEC84D;
+    line-height: 160px;
+    text-align: center;
 }
 
 .blue{
-    background-color: #2E8BC0;
+    height: 150px;
+    width: 150px;
+    position: relative;
+}
+
+.blue::after{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    content: "O";
+    font-family: inherit;
+    font-size: inherit;
+    color: #FEC84D;
+    line-height: 160px;
+    text-align: center;
 }
