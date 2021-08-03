@@ -14,6 +14,15 @@
         <h1>Tic Tac Toe</h1>
         <p id="subtitle">A simple tic tac toe game made with HTML, CSS and JS</p>
     </header>
+    
+    <div id="scorecard">
+        <div class="score">X's Wins</div>
+        <div class="score">Ties</div>
+        <div class="score">O's Wins</div>
+        <div class="score" data-score="xScore">0</div>
+        <div class="score" data-score="drawScore">0</div>
+        <div class="score" data-score="oScore">0</div>
+    </div>
     <div id="buttonContainer">
     <div><button class="button" data-button="pause">Pause</button></div>
     <div><button class="button" data-button="reset">Reset</button></div>
@@ -30,8 +39,8 @@
         <div class="box" data-pos="6"></div>
         <div class="box" data-pos="7"></div>
         <div class="box" data-pos="8"></div>
-        
     </div>
+    
     <script src="script.js"></script>
 </body>
 

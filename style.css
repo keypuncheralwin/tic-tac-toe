@@ -13,12 +13,31 @@ body{
     justify-content: center;
 }
 
+
+
 h1{
     margin: 0;
     font-size: 80px;
     font-family: 'Shadows Into Light', cursive;
 
 }
+
+#scorecard{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 150px);
+    grid-template-rows: repeat(2, 70px);
+    justify-content: center;
+    align-content: center;
+}
+
+.score{
+    font-size: 30px;
+    border: #FEC84D 1px solid;
+}
+
+
 
 #buttonContainer{
     display: flex;
@@ -55,10 +74,6 @@ button:hover{
     font-size: 20px;
 }
 
-header{
-    height: 250px;
-    padding: 30px;
-}
 
 #displayMessage{
     font-weight:bold;
@@ -164,3 +179,64 @@ header{
     line-height: 160px;
     text-align: center;
 }
+
+
+@media (max-width: 500px) {
+    h1{
+    font-size: 50px;
+    }
+
+    #status{
+        font-size: 15px;
+    }
+    
+    
+    #subtitle{
+        font-size: 15px;
+    }
+    .red{
+        height: 80px;
+        width: 80px;
+    }
+    
+    .blue{
+        height: 80px;
+        width: 80px;
+    }
+
+    .red::after{
+        line-height: 80px;
+    }
+
+    .blue::after{
+        line-height: 80px;
+    }
+
+    #scorecard{
+        padding-top: 10px;
+        padding-bottom: 10px;
+        grid-template-columns: repeat(3, 80px);
+        grid-template-rows: repeat(2, 40px);
+    }
+    
+    .score{
+        font-size: 15px;
+        border: #FEC84D 1px solid;
+    }
+
+
+    #container { 
+        padding: 10px;
+        grid-template-columns: repeat(3, 80px);
+        grid-template-rows: repeat(3, 80px);
+    
+    }
+    .box{
+        font-family: 'Sedgwick Ave Display', cursive;
+        font-size: 50px;
+        cursor: pointer;
+        line-height: 80px;
+        justify-content: center;
+        align-content: center;
+    }
+  }

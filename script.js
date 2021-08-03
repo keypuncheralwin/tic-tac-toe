@@ -4,8 +4,14 @@ let status = document.getElementById("status")
 let container = document.getElementById("container");
 const reset = document.querySelectorAll("[data-button='reset']")[0]
 const pause = document.querySelectorAll("[data-button='pause']")[0];
+const xScore = document.querySelectorAll("[data-score='xScore']")[0];
+const drawScore = document.querySelectorAll("[data-score='drawScore']")[0];
+const oScore = document.querySelectorAll("[data-score='oScore']")[0];
 let resume = document.createElement("button");
 resume.classList.add("button");
+
+
+
 //0 means player 1
 //1 means player 2
 //2 means game over <----- change this
@@ -22,6 +28,12 @@ let player2 = []; // player 2 position array
 //1 means game is over
 //2 means game is paused
 let gameState = 0; 
+
+let scoreX = 0;
+let scoreDraw = 0;
+let scoreO = 0;
+
+
 
 
 hover(player) //hover status, starts off as player 1
@@ -94,6 +106,7 @@ function checkWin(name, array) {
         if (win.every((val) => array.includes(val))) {
             gameState = 1;
             displayMessage.textContent = (name + " is the winner")
+            scoreTrack(name)
             return true
 
         }
@@ -141,6 +154,8 @@ function checkDraw() {
     let playerPos = player1.length + player2.length
     if (gameState === 0 && playerPos === 9) {
         gameState = 1
+        scoreDraw = scoreDraw + 1;
+        drawScore.textContent = scoreDraw;
         displayMessage.textContent = "It's a Draw"
 
     }
@@ -175,3 +190,12 @@ resume.addEventListener("click", event =>{
     resume.before(pause)
     resume.remove()
 })
+
+function scoreTrack(name){
+    if (name === nameX){
+        scoreX = scoreX + 1;
+        xScore.textContent = scoreX
+    }else scoreO = scoreO + 1;
+    oScore.textContent = scoreO
+
+}
