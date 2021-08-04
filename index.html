@@ -14,7 +14,7 @@
         <h1>Tic Tac Toe</h1>
         <p id="subtitle">A simple tic tac toe game made with HTML, CSS and JS</p>
     </header>
-    
+
     <div id="scorecard">
         <div class="score">X's Wins</div>
         <div class="score">Ties</div>
@@ -24,11 +24,16 @@
         <div class="score" data-score="oScore">0</div>
     </div>
     <div id="buttonContainer">
-    <div><button class="button" data-button="pause">Pause</button></div>
-    <div><button class="button" data-button="reset">Reset</button></div>
+        <div><button class="button" data-button="twoP">Two Player</button></div>
+        <div><button class="button" data-button="twist">Click here for a twist</button></div>
+        <div><button class="button" data-button="pause">Pause</button></div>
+        <div><button class="button" data-button="reset">Restart</button></div>
+        <div><button class="button" data-button="clearScore">Clear Scores</button></div>
     </div>
-    <div id="status"></div>
-    <div id="displayMessage">It is X's turn</div>
+    <div id="messages">
+        <div id="status"></div>
+        <div id="displayMessage"></div>
+    </div>
     <div id="container">
         <div class="box" data-pos="0"></div>
         <div class="box" data-pos="1"></div>
@@ -40,7 +45,7 @@
         <div class="box" data-pos="7"></div>
         <div class="box" data-pos="8"></div>
     </div>
-    
+
     <script src="script.js"></script>
 </body>
 
