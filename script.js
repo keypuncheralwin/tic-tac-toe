@@ -7,42 +7,26 @@ const pause = document.querySelector("[data-button='pause']");
 const xScore = document.querySelector("[data-score='xScore']");
 const drawScore = document.querySelector("[data-score='drawScore']");
 const oScore = document.querySelector("[data-score='oScore']");
-let resume = document.createElement("button");
-resume.classList.add("button");
 const twoPlayer = document.querySelector("[data-button='twoP']")
 const twist = document.querySelector("[data-button='twist']")
 const clearScore = document.querySelector("[data-button='clearScore']")
+const buttonContainer = document.querySelectorAll(".button")
+let resume = document.createElement("button");
+resume.classList.add("button");
+const buttonClick = new Audio("buttonClick.mp3")
+
 
 
 hover()
 //0 means player 1
 //1 means player 2
-//2 means game over <----- change this
+//2 means player vs Ai
 let player
+
+//0 means game is in play
+//1 means game is over
+//2 means game is paused
 let gameState
-twoPlayer.addEventListener("click", event => {
-status.textContent = ""
-gameState = 0; 
-player = 0
-hover(player)
-displayMessage.textContent = "It is " + nameX + "'s turn"
-})
-
-twist.addEventListener("click", event => {
-    
-    if (player === 0 || player === 1 || player === 2){
-        status.textContent = "A game is already in progress, click the reset button to play again"
-    }else {
-        gameState = 0; 
-        hover(0)
-        player = 2
-        status.textContent = "So our tic-tac-toe AI is really dumb, see if you could let it win, should be easy right?"
-        displayMessage.textContent = "It is " + nameX + "'s turn"
-    }
-    
-})    
-
-
 
 
 const nameX = "X"
@@ -52,27 +36,42 @@ const nameO = "O"
 let player1 = []; // player 1 position array
 let player2 = []; // player 2 position array
 
-//0 means game is in play
-//1 means game is over
-//2 means game is paused
+let scoreObj 
+
+if(JSON.parse(window.localStorage.getItem('scoreInfo'))){
+    scoreObj = JSON.parse(window.localStorage.getItem('scoreInfo'))
+    console.log("saved scores loaded")
+    console.log(scoreObj)
+}else{
+    scoreObj = {
+        x: 0,
+        draw: 0,
+        o: 0
+    }
+    console.log("no saved scores")
+    console.log(scoreObj)
+}
 
 
-let scoreX = 0;
-let scoreDraw = 0;
-let scoreO = 0;
+xScore.textContent = scoreObj.x
+oScore.textContent = scoreObj.o
+drawScore.textContent = scoreObj.draw
 
-let computeRandom 
+
+
+
+let computeRandom
 
 
 for (let box of boxes) {
-        box.addEventListener("click", event => {
-        if (gameState === 0) { 
+    box.addEventListener("click", event => {
+        if (gameState === 0) {
             if (player === 0) {
                 let positionX = parseInt(box.getAttribute('data-pos'))
                 if (checkBox(positionX) !== true) {
                     displayMessage.textContent = "It is " + nameO + "'s turn"
                     player1.push(positionX)
-                    console.log(player1)
+                    console.log("position player1 "+player1)
                     box.textContent = nameX;
                     player = 1
                     if (player1.length >= 3) {
@@ -90,7 +89,7 @@ for (let box of boxes) {
                 if (checkBox(positionO) !== true) {
                     displayMessage.textContent = "It is " + nameX + "'s turn"
                     player2.push(positionO)
-                    console.log(player2)
+                    console.log("position player2 "+player2)
                     box.textContent = nameO;
                     player = 0
                     if (player1.length >= 3) {
@@ -106,47 +105,47 @@ for (let box of boxes) {
                 let positionX = parseInt(box.getAttribute('data-pos'))
                 if (checkBox(positionX) !== true) {
                     player1.push(positionX)
-                    console.log("user " +player1)
+                    console.log("user " + player1)
                     box.textContent = nameX;
                     if (player1.length >= 3) {
                         checkWin(nameX, player1);
                         checkDraw()
                     }
                     computeRandom = Math.floor(Math.random() * 8)
-                    while(player1.includes(computeRandom) || player2.includes(computeRandom) && player1.length <= 4){
+                    while (player1.includes(computeRandom) || player2.includes(computeRandom) && player1.length <= 4) {
                         computeRandom = Math.floor(Math.random() * 8)
                         console.log(computeRandom)
                     }
-                        player2.push(computeRandom)
-                        console.log("computer " + player2)
-                        
-                    if(gameState === 0){
+                    player2.push(computeRandom)
+                    console.log("computer " + player2)
+
+                    if (gameState === 0) {
                         const computerBox = document.querySelector(`[data-pos="${computeRandom}"]`)
                         computerBox.textContent = nameO
                         if (player2.length >= 3) {
                             checkWin(nameO, player2);
                             checkDraw()
                         }
-                    }    
-                        
-                    
-                                      
+                    }
+
+
+
                 }
-                        
-                    
-                                    
+
+
+
 
             }
 
-        }else if (gameState === 1) {
-            status.textContent = "The game is over! Why are you still clicking the boxes? Click reset if you want to play again"
-    
-        }else if (gameState === 2) {
-            status.textContent = "The game is paused! click resume to keep playing!"
-        }else status.textContent = "^^^Click on one of the options above to start Playing!^^^"
+        } else if (gameState === 1) {
+            status.textContent = "The game is over! Click restart if you want to play again"
 
-        })
-   
+        } else if (gameState === 2) {
+            status.textContent = "The game is paused! click resume to keep playing!"
+        } else status.textContent = "^Click on one of the options above to start Playing!^"
+
+    })
+
 
 }
 
@@ -190,7 +189,7 @@ function hover(player) {
 
                 box.classList.remove("red")
             })
-        } else if(player === 1){
+        } else if (player === 1) {
             box.addEventListener("mouseover", event => {
                 box.classList.remove("idle")
                 box.classList.remove("red")
@@ -200,7 +199,7 @@ function hover(player) {
             box.addEventListener("mouseleave", event => {
                 box.classList.remove("blue")
             })
-        } else{
+        } else {
             box.addEventListener("mouseover", event => {
                 box.classList.remove("red")
                 box.classList.remove("blue")
@@ -227,28 +226,70 @@ function checkDraw() {
     let playerPos = player1.length + player2.length
     if (gameState === 0 && playerPos === 9) {
         gameState = 1
-        scoreDraw = scoreDraw + 1;
-        drawScore.textContent = scoreDraw;
+        scoreObj.draw = scoreObj.draw + 1;
+        drawScore.textContent = scoreObj.draw;
         displayMessage.textContent = "It's a Draw"
-
+        window.localStorage.setItem('scoreInfo', JSON.stringify(scoreObj));
     }
 }
 
+
+twoPlayer.addEventListener("click", event => {
+    buttonClick.play()
+    selector(twoPlayer)
+    restart()
+    status.textContent = ""
+    gameState = 0;
+    player = 0
+    hover(player)
+    displayMessage.textContent = "It is " + nameX + "'s turn"
+})
+
+twist.addEventListener("click", event => {
+    buttonClick.play()
+    selector(twist)
+    restart()
+    gameState = 0;
+    hover(0)
+    player = 2
+    status.textContent = "So our tic-tac-toe AI is really dumb, see if you could let it win, should be easy right?"
+    displayMessage.textContent = "It is " + nameX + "'s turn"
+
+})
+
+
+
 reset.addEventListener("click", event => {
+    buttonClick.play()
+    selector(reset)
+    reset.classList.remove("buttonSelected")
+    restart()
+    hover()
+
+})
+
+function restart() {
+    resume.before(pause)
+    resume.remove()
     status.textContent = "";
     player1.length = 0;
     player2.length = 0;
     gameState = null;
     player = null;
-    hover()
     displayMessage.textContent = ""
-    for(let box of boxes){
+    for (let box of boxes) {
         box.textContent = "";
 
     }
-})
 
-pause.addEventListener("click", event =>{
+}
+
+
+
+
+pause.addEventListener("click", event => {
+    buttonClick.play()
+    selector(resume)
     status.textContent = "Game is paused, click resume to keep playing"
     gameState = 2;
     resume.textContent = "resume"
@@ -257,29 +298,44 @@ pause.addEventListener("click", event =>{
 
 })
 
-resume.addEventListener("click", event =>{
+resume.addEventListener("click", event => {
+    buttonClick.play()
+    selector(pause)
     gameState = 0;
     status.textContent = "";
     resume.before(pause)
     resume.remove()
 })
 
-function scoreTrack(name){
-    if (name === nameX){
-        scoreX = scoreX + 1;
-        xScore.textContent = scoreX
-    }else scoreO = scoreO + 1;
-    oScore.textContent = scoreO
+function scoreTrack(name) {
+    if (name === nameX) {
+        scoreObj.x = scoreObj.x + 1;
+        xScore.textContent = scoreObj.x
+        window.localStorage.setItem('scoreInfo', JSON.stringify(scoreObj));
+    } else scoreObj.o = scoreObj.o + 1;
+    oScore.textContent = scoreObj.o
+    window.localStorage.setItem('scoreInfo', JSON.stringify(scoreObj));
 
 }
 
-clearScore.addEventListener("click", event =>{
-    scoreX = 0;
-    scoreO = 0;
-    scoreDraw = 0;
-    xScore.textContent = "";
-    oScore.textContent = "";
-    drawScore.textContent = "";
+clearScore.addEventListener("click", event => {
+    buttonClick.play()
+    selector(clearScore)
+    clearScore.classList.remove("buttonSelected")
+    scoreObj.x = 0;
+    scoreObj.o = 0;
+    scoreObj.draw = 0;
+    xScore.textContent = scoreObj.x;
+    oScore.textContent = scoreObj.o;
+    drawScore.textContent = scoreObj.draw;
+    window.localStorage.clear()
 
-}) 
+})
 
+function selector(buttonName) {
+    for (button of buttonContainer) {
+        button.classList.remove("buttonSelected")
+    }
+    resume.classList.remove("buttonSelected")
+    buttonName.classList.add("buttonSelected")
+}
