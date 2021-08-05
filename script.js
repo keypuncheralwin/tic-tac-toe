@@ -13,8 +13,8 @@ const clearScore = document.querySelector("[data-button='clearScore']")
 const buttonContainer = document.querySelectorAll(".button")
 let resume = document.createElement("button");
 resume.classList.add("button");
-const buttonClick = new Audio("buttonClick.mp3")
-
+const buttonClick = new Audio("buttonClick.wav")
+const gameClick = new Audio("gameClick.wav")
 
 
 hover()
@@ -66,6 +66,7 @@ let computeRandom
 for (let box of boxes) {
     box.addEventListener("click", event => {
         if (gameState === 0) {
+            gameClick.play()
             if (player === 0) {
                 let positionX = parseInt(box.getAttribute('data-pos'))
                 if (checkBox(positionX) !== true) {
@@ -138,11 +139,14 @@ for (let box of boxes) {
             }
 
         } else if (gameState === 1) {
+            
             status.textContent = "The game is over! Click restart if you want to play again"
 
         } else if (gameState === 2) {
+            
             status.textContent = "The game is paused! click resume to keep playing!"
         } else status.textContent = "^Click on one of the options above to start Playing!^"
+        
 
     })
 
