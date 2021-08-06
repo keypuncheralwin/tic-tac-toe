@@ -11,13 +11,18 @@ const twoPlayer = document.querySelector("[data-button='twoP']")
 const twist = document.querySelector("[data-button='twist']")
 const clearScore = document.querySelector("[data-button='clearScore']")
 const buttonContainer = document.querySelectorAll(".button")
+const modalBg = document.querySelector(".modal-bg")
+const modalText = document.getElementById("modalText")
+const closeModal = document.querySelector("[data-button='close']")
 let resume = document.createElement("button");
 resume.classList.add("button");
 const buttonClick = new Audio("buttonClick.wav")
 const gameClick = new Audio("gameClick.wav")
+const wonGame = new Audio("wonGame.wav")
 
 
-hover()
+hover() //to display blank hover
+
 //0 means player 1
 //1 means player 2
 //2 means player vs Ai
@@ -36,14 +41,14 @@ const nameO = "O"
 let player1 = []; // player 1 position array
 let player2 = []; // player 2 position array
 
-let scoreObj 
+let scoreObj //initialise score obj
 
-if(JSON.parse(window.localStorage.getItem('scoreInfo'))){
-    scoreObj = JSON.parse(window.localStorage.getItem('scoreInfo'))
+if (JSON.parse(window.localStorage.getItem('scoreInfo'))) { //checking if score is already stored in local storage
+    scoreObj = JSON.parse(window.localStorage.getItem('scoreInfo')) //if it is then load it
     console.log("saved scores loaded")
     console.log(scoreObj)
-}else{
-    scoreObj = {
+} else {
+    scoreObj = { //if no scores in local storage, then set score to 0
         x: 0,
         draw: 0,
         o: 0
@@ -53,13 +58,15 @@ if(JSON.parse(window.localStorage.getItem('scoreInfo'))){
 }
 
 
+//applying score values to the page
+
 xScore.textContent = scoreObj.x
 oScore.textContent = scoreObj.o
 drawScore.textContent = scoreObj.draw
 
 
 
-
+//initialising AI player position
 let computeRandom
 
 
@@ -72,7 +79,7 @@ for (let box of boxes) {
                 if (checkBox(positionX) !== true) {
                     displayMessage.textContent = "It is " + nameO + "'s turn"
                     player1.push(positionX)
-                    console.log("position player1 "+player1)
+                    console.log("position player1 " + player1)
                     box.textContent = nameX;
                     player = 1
                     if (player1.length >= 3) {
@@ -90,7 +97,7 @@ for (let box of boxes) {
                 if (checkBox(positionO) !== true) {
                     displayMessage.textContent = "It is " + nameX + "'s turn"
                     player2.push(positionO)
-                    console.log("position player2 "+player2)
+                    console.log("position player2 " + player2)
                     box.textContent = nameO;
                     player = 0
                     if (player1.length >= 3) {
@@ -139,14 +146,14 @@ for (let box of boxes) {
             }
 
         } else if (gameState === 1) {
-            
+
             status.textContent = "The game is over! Click restart if you want to play again"
 
         } else if (gameState === 2) {
-            
+
             status.textContent = "The game is paused! click resume to keep playing!"
         } else status.textContent = "^Click on one of the options above to start Playing!^"
-        
+
 
     })
 
@@ -169,9 +176,11 @@ function checkWin(name, array) {
         if (win.every((val) => array.includes(val))) {
             gameState = 1;
             player = null;
-            displayMessage.textContent = (name + " is the winner")
-            scoreTrack(name)
-            return true
+            modalBg.classList.remove("bg-notactive") //removing any present fade out class
+            modalBg.classList.add("bg-active") //applying fade in class
+            modalText.textContent = (name + " is the winner!") //diplsying winner in modal
+            wonGame.play()
+            scoreTrack(name) //running the score function to updated scores of the winner
 
         }
 
@@ -232,7 +241,10 @@ function checkDraw() {
         gameState = 1
         scoreObj.draw = scoreObj.draw + 1;
         drawScore.textContent = scoreObj.draw;
-        displayMessage.textContent = "It's a Draw"
+        modalBg.classList.remove("bg-notactive")
+        modalBg.classList.add("bg-active")
+        modalText.textContent = ("It's a Tie!")
+        wonGame.play()
         window.localStorage.setItem('scoreInfo', JSON.stringify(scoreObj));
     }
 }
@@ -335,6 +347,16 @@ clearScore.addEventListener("click", event => {
     window.localStorage.clear()
 
 })
+
+closeModal.addEventListener("click", event => {
+    buttonClick.play()
+    modalBg.classList.add("bg-notactive")
+    modalBg.classList.remove("bg-active")
+    restart()
+    selector(resume)
+})
+
+
 
 function selector(buttonName) {
     for (button of buttonContainer) {

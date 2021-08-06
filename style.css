@@ -1,9 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Sedgwick+Ave+Display&display=swap');
 
-*{box-sizing: border-box;}
+* {
+    box-sizing: border-box;
+}
 
-body{
+body {
     font-family: 'Shadows Into Light', cursive;
     background-color: black;
     color: #FEC84D;
@@ -15,14 +17,15 @@ body{
 
 
 
-h1{
+h1 {
     margin: 0;
     font-size: 80px;
     font-family: 'Shadows Into Light', cursive;
 
 }
 
-#scorecard{
+
+#scorecard {
     padding-top: 10px;
     padding-bottom: 10px;
     display: grid;
@@ -32,7 +35,7 @@ h1{
     align-content: center;
 }
 
-.score{
+.score {
     font-size: 30px;
     border: #FEC84D 1px solid;
     padding: 0 5px 0 5px;
@@ -40,27 +43,27 @@ h1{
 
 
 
-#buttonContainer{
+#buttonContainer {
     display: flex;
-    justify-content:center;
+    justify-content: center;
     padding-bottom: 10px;
-    
+
 }
 
-.button{
+.button {
     border: #FEC84D 1px solid;
     margin: 2px;
     font: inherit;
     color: inherit;
     flex: 1;
-    height: auto;   
+    height: auto;
     width: fit-content;
     background-color: black;
     cursor: pointer;
 }
 
-button:hover{
-    background-color:#FEC84D;
+button:hover {
+    background-color: #FEC84D;
     color: black;
 }
 
@@ -68,9 +71,9 @@ button:hover{
     background-color: #FEC84D;
     box-shadow: 1px 1px white;
     transform: translateY(3px);
-  }
+}
 
-#messages{
+#messages {
     min-height: 50px;
     display: grid;
     margin-bottom: 30px;
@@ -80,25 +83,25 @@ button:hover{
     align-content: center;
 }
 
-#status{
+#status {
     font-size: 25px;
 }
 
-#displayMessage{
-    font-weight:bold;
+#displayMessage {
+    font-weight: bold;
     font-size: 25px;
 }
 
 
-#subtitle{
-    margin:0;
+#subtitle {
+    margin: 0;
     font-size: 20px;
 }
 
 
 
 
-#container{
+#container {
     display: grid;
     padding: 30px;
     grid-template-columns: repeat(3, 150px);
@@ -108,8 +111,8 @@ button:hover{
 
 }
 
-.box{
-    
+.box {
+
     font-family: 'Sedgwick Ave Display', cursive;
     font-size: 150px;
     cursor: pointer;
@@ -119,54 +122,54 @@ button:hover{
     border: #FEC84D 3px solid;
 }
 
-[data-pos="0"]{
+[data-pos="0"] {
     border-top: none;
     border-left: none;
 }
 
-[data-pos="1"]{
+[data-pos="1"] {
     border-top: none;
 }
 
-[data-pos="2"]{
+[data-pos="2"] {
     border-top: none;
     border-right: none;
 }
 
-[data-pos="3"]{
+[data-pos="3"] {
     border-left: none;
 }
 
-[data-pos="5"]{
+[data-pos="5"] {
     border-right: none;
 }
 
-[data-pos="6"]{
+[data-pos="6"] {
     border-left: none;
     border-bottom: none;
 }
 
-[data-pos="7"]{
+[data-pos="7"] {
     border-bottom: none;
 }
 
-[data-pos="8"]{
+[data-pos="8"] {
     border-bottom: none;
     border-right: none;
 }
 
-.idle{
+.idle {
     background-color: #fec94da8;
 }
 
-.red{
+.red {
     position: relative;
     height: 150px;
     width: 150px;
-    
+
 }
 
-.red::after{
+.red::after {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -180,13 +183,13 @@ button:hover{
     text-align: center;
 }
 
-.blue{
+.blue {
     height: 150px;
     width: 150px;
     position: relative;
 }
 
-.blue::after{
+.blue::after {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -200,52 +203,113 @@ button:hover{
     text-align: center;
 }
 
+.buttonSelected {
+    border: white 1px solid;
+    color: white;
+}
 
+
+.modal-bg {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.2s ease-in all;
+}
+
+.bg-active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.bg-notactive {
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.2s ease-out all;
+}
+
+
+
+.modal {
+    background-color: rgba(255, 255, 255, 0.092);
+    border: #FEC84D 3px solid;
+    width: 30%;
+    height: 20%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+}
+
+#modalText {
+    font-size: 40px;
+}
+
+
+[data-button="close"] {
+    border: #FEC84D 1px solid;
+    margin: 2px;
+    font: inherit;
+    color: inherit;
+    height: auto;
+    width: 30%;
+    background-color: black;
+    cursor: pointer;
+}
 
 @media (max-width: 500px) {
-    h1{
-    font-size: 50px;
+    h1 {
+        font-size: 50px;
     }
 
-    #status{
+    #status {
         font-size: 15px;
     }
-    
-    
-    #subtitle{
+
+
+    #subtitle {
         font-size: 15px;
     }
-    .red{
-        height: 80px;
-        width: 80px;
-    }
-    
-    .blue{
+
+    .red {
         height: 80px;
         width: 80px;
     }
 
-    .red::after{
+    .blue {
+        height: 80px;
+        width: 80px;
+    }
+
+    .red::after {
         line-height: 80px;
     }
 
-    .blue::after{
+    .blue::after {
         line-height: 80px;
     }
 
-    
-    .score{
+
+    .score {
         font-size: 15px;
-        
+
     }
 
-    #container { 
+    #container {
         padding: 10px;
         grid-template-columns: repeat(3, 80px);
         grid-template-rows: repeat(3, 80px);
-    
+
     }
-    .box{
+
+    .box {
         font-family: 'Sedgwick Ave Display', cursive;
         font-size: 50px;
         cursor: pointer;
@@ -253,13 +317,17 @@ button:hover{
         justify-content: center;
         align-content: center;
     }
-    .button{
+
+    .button {
         font-size: 10px;
         flex-wrap: wrap;
     }
-  }
 
-  .buttonSelected{
-    border: white 1px solid;
-    color: white;
-  }
+    #modalText {
+        font-size: 20px;
+    }
+
+    [data-button="close"] {
+        font-size: 10px;
+    }
+}
