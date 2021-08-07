@@ -2,7 +2,7 @@
 A simple tic-tac-toe game made using Javascript, Html and CSS
 
 ## Game Layout
-<em>[Check out the planning/psuedo code here -plan.pdf](./images])</em>
+<em>[Check out the planning/psuedo code here -plan.pdf](https://github.com/keypuncheralwin/tic-tac-toe/blob/main/images/Plan.pdf])</em>
 
 ![Outline](./images/gameLayout.png)
 
