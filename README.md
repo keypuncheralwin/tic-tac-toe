@@ -1,5 +1,6 @@
 # tic-tac-toe
 A simple tic-tac-toe game made using Javascript, Html and CSS
+[Final project link](https://keypuncheralwin.github.io/tic-tac-toe/)
 
 ## Game Layout
 <em>[Check out the planning/psuedo code here](./images/Plan.pdf)</em>
