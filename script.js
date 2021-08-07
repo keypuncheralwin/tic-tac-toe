@@ -16,9 +16,9 @@ const modalText = document.getElementById("modalText")
 const closeModal = document.querySelector("[data-button='close']")
 let resume = document.createElement("button");
 resume.classList.add("button");
-const buttonClick = new Audio("buttonClick.wav")
-const gameClick = new Audio("gameClick.wav")
-const wonGame = new Audio("wonGame.wav")
+const buttonClick = new Audio("./sounds/buttonClick.wav")
+const gameClick = new Audio("./sounds/gameClick.wav")
+const wonGame = new Audio("./sounds/wonGame.wav")
 
 
 hover() //to display blank hover
@@ -79,7 +79,8 @@ for (let box of boxes) {
                 if (checkBox(positionX) !== true) {
                     displayMessage.textContent = "It is " + nameO + "'s turn"
                     player1.push(positionX)
-                    console.log("position player1 " + player1)
+                    console.log("player 1 position")
+                    console.log(player1)
                     box.textContent = nameX;
                     player = 1
                     if (player1.length >= 3) {
@@ -97,7 +98,8 @@ for (let box of boxes) {
                 if (checkBox(positionO) !== true) {
                     displayMessage.textContent = "It is " + nameX + "'s turn"
                     player2.push(positionO)
-                    console.log("position player2 " + player2)
+                    console.log("player 2 position")
+                    console.log(player2)
                     box.textContent = nameO;
                     player = 0
                     if (player1.length >= 3) {
@@ -113,7 +115,8 @@ for (let box of boxes) {
                 let positionX = parseInt(box.getAttribute('data-pos'))
                 if (checkBox(positionX) !== true) {
                     player1.push(positionX)
-                    console.log("user " + player1)
+                    console.log("player 1 position")
+                    console.log(player1)
                     box.textContent = nameX;
                     if (player1.length >= 3) {
                         checkWin(nameX, player1);
@@ -125,7 +128,8 @@ for (let box of boxes) {
                         console.log(computeRandom)
                     }
                     player2.push(computeRandom)
-                    console.log("computer " + player2)
+                    console.log("AI player position")
+                    console.log(player2)
 
                     if (gameState === 0) {
                         const computerBox = document.querySelector(`[data-pos="${computeRandom}"]`)
@@ -297,26 +301,30 @@ function restart() {
         box.textContent = "";
 
     }
-
+    hover()
 }
 
 
 
 
 pause.addEventListener("click", event => {
-    buttonClick.play()
-    selector(resume)
-    status.textContent = "Game is paused, click resume to keep playing"
-    gameState = 2;
-    resume.textContent = "resume"
-    reset.before(resume)
-    pause.remove()
+    if(gameState === 0){
+        buttonClick.play()
+        selector(resume)
+        status.textContent = "Game is paused, click resume to keep playing"
+        gameState = 2;
+        resume.textContent = "resume"
+        reset.before(resume)
+        pause.remove()
+    }else { status.textContent = "Play a game first to pause!"
+
+    }
+    
 
 })
 
 resume.addEventListener("click", event => {
     buttonClick.play()
-    selector(pause)
     gameState = 0;
     status.textContent = "";
     resume.before(pause)
